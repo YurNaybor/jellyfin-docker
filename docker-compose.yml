@@ -1,0 +1,18 @@
+---
+version: '2.4'
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:${JELLYFIN_VERSION}
+    container_name: jellyfin
+    user: ${JELLYFIN_UID}:${JELLYFIN_GID}
+    restart: unless-stopped
+    ports:
+      - "8096:8096"
+    volumes:
+      - config:/config
+      - cache:/cache
+      - ${JELLYFIN_MUSIC_DIR}:/media:ro
+volumes:
+  config:
+  cache:
+...
