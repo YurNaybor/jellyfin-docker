@@ -5,13 +5,19 @@ services:
     image: jellyfin/jellyfin:${JELLYFIN_VERSION}
     container_name: jellyfin
     user: ${JELLYFIN_UID}:${JELLYFIN_GID}
+    network_mode: host
     restart: unless-stopped
-    ports:
-      - "8096:8096"
     volumes:
       - config:/config
       - cache:/cache
-      - ${JELLYFIN_MUSIC_DIR}:/media:ro
+      - ${JELLYFIN_MEDIA_BASE_DIR}/music:/media/music:ro
+      - ${JELLYFIN_MEDIA_BASE_DIR}/movies:/media/movies:ro
+      - ${JELLYFIN_MEDIA_BASE_DIR}/shows:/media/shows:ro
+      - ${JELLYFIN_MEDIA_BASE_DIR}/podcasts:/media/podcasts:ro
+      - ${JELLYFIN_MEDIA_BASE_DIR}/books:/media/books:ro
+      - ${JELLYFIN_MEDIA_BASE_DIR}/audiobooks:/media/audiobooks:ro
+        #    environment:
+        #      - JELLYFIN_PublishedServerUrl=https://jellyfin.int.benvo.net
 volumes:
   config:
   cache:
